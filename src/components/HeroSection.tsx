@@ -1,6 +1,11 @@
-import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Play, X } from "lucide-react";
+import { useState } from "react";
+
 export function HeroSection() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const videoId = "U0gBANjhUAk";
+
     return (
         <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#1a1a4e]">
             {/* Subtle Background Gradient */}
@@ -93,6 +98,30 @@ export function HeroSection() {
                 >
                     Joanna Horton McPherson
                 </motion.p>
+
+                {/* Watch Video Button */}
+                <motion.button
+                    initial={{
+                        opacity: 0,
+                        y: 20,
+                    }}
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+                    transition={{
+                        duration: 1,
+                        delay: 1.4,
+                        ease: "easeOut",
+                    }}
+                    onClick={() => setIsModalOpen(true)}
+                    className="mt-8 flex items-center gap-2 bg-[#d4952a] hover:bg-[#b87d1f] text-[#1a1a4e] px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                >
+                    <Play className="w-5 h-5" fill="currentColor" />
+                    <span className="uppercase tracking-wider text-sm">
+                        Watch Video
+                    </span>
+                </motion.button>
             </div>
 
             {/* Scroll Indicator */}
@@ -122,6 +151,55 @@ export function HeroSection() {
                     <ChevronDown className="text-[#d4952a] w-6 h-6 opacity-60" />
                 </motion.div>
             </motion.div>
+
+            {/* Video Modal */}
+            <AnimatePresence>
+                {isModalOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+                        onClick={() => setIsModalOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative w-full max-w-4xl mx-4"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="absolute -top-12 right-0 text-white hover:text-[#d4952a] transition-colors"
+                                aria-label="Close modal"
+                            >
+                                <X className="w-8 h-8" />
+                            </button>
+
+                            {/* YouTube Iframe */}
+                            <div className="relative w-full aspect-video bg-[#1a1a4e] rounded-lg overflow-hidden shadow-2xl">
+                                <iframe
+                                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
+                                    title="Speak & Rise: Women Speakers Leading From The Stage"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="w-full h-full"
+                                />
+                            </div>
+
+                            {/* Video Title */}
+                            <p className="text-white text-center mt-4 font-medium">
+                                Speak & Rise: Women Speakers Leading From The
+                                Stage
+                            </p>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

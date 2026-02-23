@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+
 export function CommunitySection() {
     return (
         <section className="py-24 md:py-32 bg-[#1a1a4e] text-[#faf8f5]">
@@ -70,12 +72,12 @@ export function CommunitySection() {
                             <span className="text-xs uppercase tracking-widest text-[#d4952a]">
                                 Complimentary
                             </span>
-                            <a
-                                href="#contact"
+                            <Link
+                                to="/vault-registration"
                                 className="text-[#d4952a] hover:text-[#e8a838] transition-colors flex items-center gap-2 text-sm font-medium tracking-wide uppercase"
                             >
                                 Join the Circle <ArrowRight size={16} />
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
 
@@ -111,10 +113,11 @@ export function CommunitySection() {
 
                         <div className="flex md:flex-row flex-col md:space-y-0 space-y-4 items-center justify-between mt-auto pt-8 border-t border-[#faf8f5]/10">
                             <span className="text-xs uppercase tracking-widest text-[#d4952a]">
-                                Investment: $4,000
+                                Investment: $1,800
                             </span>
                             <a
-                                href="#contact"
+                                href="https://go.trueinfluencemethod.com/speak-and-rise-334058"
+                                target="_blank"
                                 className="text-[#d4952a] hover:text-[#e8a838] transition-colors flex items-center gap-2 text-sm font-medium tracking-wide uppercase"
                             >
                                 Learn More <ArrowRight size={16} />

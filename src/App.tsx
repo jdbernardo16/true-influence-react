@@ -1,3 +1,4 @@
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { CommunitySection } from "./components/CommunitySection";
 import { ContactSection } from "./components/ContactSection";
 import { ExperienceSection } from "./components/ExperienceSection";
@@ -9,11 +10,15 @@ import { MethodSection } from "./components/MethodSection";
 import { Navigation } from "./components/Navigation";
 import { PhilosophySection } from "./components/PhilosophySection";
 import { PhotoGalleryCarousel } from "./components/PhotoGalleryCarousel";
+import { PrivateApplicationForm } from "./components/PrivateApplicationForm";
 import { ResearchSection } from "./components/ResearchSection";
+// import { SpeakAndRiseEnrollmentForm } from "./components/SpeakAndRiseEnrollmentForm";
 import { TestimonialsSection } from "./components/TestimonialsSection";
 import { TransformationsSection } from "./components/TransformationsSection";
+import { VaultRegistrationForm } from "./components/VaultRegistrationForm";
 import { WhoSection } from "./components/WhoSection";
-export function App() {
+
+function HomePage() {
     // Sample photo gallery data - replace with your actual photos
     const galleryPhotos = [
         {
@@ -84,5 +89,27 @@ export function App() {
                 <ContactSection />
             </main>
         </div>
+    );
+}
+
+export function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route
+                    path="/vault-registration"
+                    element={<VaultRegistrationForm />}
+                />
+                <Route
+                    path="/private-application"
+                    element={<PrivateApplicationForm />}
+                />
+                {/* <Route
+                    path="/speak-rise-enrollment"
+                    element={<SpeakAndRiseEnrollmentForm />}
+                /> */}
+            </Routes>
+        </Router>
     );
 }

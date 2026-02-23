@@ -313,10 +313,10 @@ export function ContactSection() {
                     className="flex flex-col items-center space-y-8 mt-16"
                 >
                     <a
-                        href="mailto:joanna@joannahortonmcpherson.com"
+                        href="mailto:joanna@trueinfluencemethod.com"
                         className="text-xl md:text-3xl font-serif italic text-[#d4952a] hover:text-[#e8a838] transition-colors border-b border-transparent hover:border-[#e8a838] pb-1"
                     >
-                        joanna@joannahortonmcpherson.com
+                        joanna@trueinfluencemethod.com
                     </a>
 
                     <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mt-8">

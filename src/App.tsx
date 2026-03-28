@@ -11,6 +11,7 @@ import { Navigation } from "./components/Navigation";
 import { PhilosophySection } from "./components/PhilosophySection";
 import { PhotoGalleryCarousel } from "./components/PhotoGalleryCarousel";
 import { PrivateApplicationForm } from "./components/PrivateApplicationForm";
+import { PrivateClientInquiryForm } from "./components/PrivateClientInquiryForm";
 import { ResearchSection } from "./components/ResearchSection";
 // import { SpeakAndRiseEnrollmentForm } from "./components/SpeakAndRiseEnrollmentForm";
 import { TestimonialsSection } from "./components/TestimonialsSection";
@@ -104,6 +105,10 @@ export function App() {
                 <Route
                     path="/private-application"
                     element={<PrivateApplicationForm />}
+                />
+                <Route
+                    path="/private-client-inquiry"
+                    element={<PrivateClientInquiryForm />}
                 />
                 {/* <Route
                     path="/speak-rise-enrollment"

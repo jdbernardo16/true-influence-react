@@ -111,7 +111,7 @@ export function ExperienceSection() {
                     className="mt-12"
                 >
                     <button
-                        onClick={() => navigate("/private-application")}
+                        onClick={() => navigate("/private-client-inquiry")}
                         className="inline-flex items-center gap-3 px-8 py-4 bg-[#d4952a] hover:bg-[#e8a838] text-[#1a1a4e] font-semibold rounded-lg transition-all hover:shadow-lg hover:shadow-[#d4952a]/20 text-lg"
                     >
                         Apply for Private Advising

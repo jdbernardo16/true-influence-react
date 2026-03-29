@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Google Form action URL for Private Client Inquiry
-// NOTE: Replace this URL with your actual Google Form URL after creating it
 const GOOGLE_FORM_ACTION =
-    "https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse";
+    "https://docs.google.com/forms/d/e/1FAIpQLScxaDXVN48iueQiOq9Q5kVcoHH-QI4V4Dz1STSpa-lVZgV1Bw/formResponse";
 
 export function PrivateClientInquiryForm() {
     const navigate = useNavigate();
@@ -30,6 +29,7 @@ export function PrivateClientInquiryForm() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
     const handleChange = (
         e: React.ChangeEvent<
@@ -64,26 +64,88 @@ export function PrivateClientInquiryForm() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setSubmitError("");
+
+        // Client-side validation
+        const requiredFields = {
+            fullName: "Full Name",
+            email: "Email Address",
+            phone: "Phone Number",
+            visionGoal: "Primary Goal",
+            outcomeGoal: "Desired Outcome",
+            professionalPath: "Current Professional Path",
+            investment: "Investment Level",
+        };
+
+        const missingFields: string[] = [];
+        for (const [key, label] of Object.entries(requiredFields)) {
+            const value = formData[key as keyof typeof formData];
+            if (!value || (typeof value === "string" && value.trim() === "")) {
+                missingFields.push(label);
+            }
+        }
+
+        if (missingFields.length > 0) {
+            setSubmitError(
+                `Please fill in the following required fields: ${missingFields.join(
+                    ", ",
+                )}`,
+            );
+            return;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setSubmitError("Please enter a valid email address.");
+            return;
+        }
+
+        // Validate that at least one checkbox is selected for "Identifying the Block"
+        if (formData.storyBlock.length === 0) {
+            setSubmitError(
+                "Please select at least one option for 'Identifying the Block'.",
+            );
+            return;
+        }
+
         setIsSubmitting(true);
 
         // Create hidden inputs for Google Form submission
         const formDataObj = new FormData();
 
-        // NOTE: Replace these entry IDs with your actual Google Form entry IDs
-        // You'll find these in the Google Forms setup documentation
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.fullName);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.email);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.phone);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.website);
-        formDataObj.append(
-            "entry.YOUR_ENTRY_ID",
-            formData.storyBlock.join(", "),
-        );
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.visionGoal);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.outcomeGoal);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.professionalPath);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.investment);
-        formDataObj.append("entry.YOUR_ENTRY_ID", formData.additionalInfo);
+        // Required fields - always included
+        formDataObj.append("entry.1752943827", formData.fullName);
+        formDataObj.append("entry.1260464480", formData.email);
+        formDataObj.append("entry.1997012052", formData.phone);
+
+        // Optional fields - only append if they have values
+        if (formData.website.trim()) {
+            formDataObj.append("entry.1965474626", formData.website);
+        }
+
+        // Story Block is now required (at least one checkbox must be selected)
+        // Include sentinel field for checkboxes
+        formDataObj.append("entry.318364041_sentinel", "");
+        formDataObj.append("entry.318364041", formData.storyBlock.join(", "));
+
+        // Include sentinel fields for radio buttons
+        formDataObj.append("entry.735352643_sentinel", "");
+        formDataObj.append("entry.735352643", formData.visionGoal);
+
+        formDataObj.append("entry.1836767856_sentinel", "");
+        formDataObj.append("entry.1836767856", formData.outcomeGoal);
+
+        formDataObj.append("entry.159948075_sentinel", "");
+        formDataObj.append("entry.159948075", formData.professionalPath);
+
+        formDataObj.append("entry.1391953150_sentinel", "");
+        formDataObj.append("entry.1391953150", formData.investment);
+
+        // Optional additional info - only append if it has a value
+        if (formData.additionalInfo.trim()) {
+            formDataObj.append("entry.2130249970", formData.additionalInfo);
+        }
 
         // Submit to Google Forms using fetch
         fetch(GOOGLE_FORM_ACTION, {
@@ -113,40 +175,56 @@ export function PrivateClientInquiryForm() {
             .catch(() => {
                 // Fallback: open in new tab if fetch fails
                 const url = new URL(GOOGLE_FORM_ACTION);
+                url.searchParams.append("entry.1752943827", formData.fullName);
+                url.searchParams.append("entry.1260464480", formData.email);
+                url.searchParams.append("entry.1997012052", formData.phone);
+
+                // Optional fields - only append if they have values
+                if (formData.website.trim()) {
+                    url.searchParams.append(
+                        "entry.1965474626",
+                        formData.website,
+                    );
+                }
+
+                // Story Block is now required (at least one checkbox must be selected)
+                // Include sentinel field for checkboxes
+                url.searchParams.append("entry.318364041_sentinel", "");
                 url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
-                    formData.fullName,
-                );
-                url.searchParams.append("entry.YOUR_ENTRY_ID", formData.email);
-                url.searchParams.append("entry.YOUR_ENTRY_ID", formData.phone);
-                url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
-                    formData.website,
-                );
-                url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
+                    "entry.318364041",
                     formData.storyBlock.join(", "),
                 );
+
+                // Include sentinel fields for radio buttons
+                url.searchParams.append("entry.735352643_sentinel", "");
+                url.searchParams.append("entry.735352643", formData.visionGoal);
+
+                url.searchParams.append("entry.1836767856_sentinel", "");
                 url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
-                    formData.visionGoal,
-                );
-                url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
+                    "entry.1836767856",
                     formData.outcomeGoal,
                 );
+
+                url.searchParams.append("entry.159948075_sentinel", "");
                 url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
+                    "entry.159948075",
                     formData.professionalPath,
                 );
+
+                url.searchParams.append("entry.1391953150_sentinel", "");
                 url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
+                    "entry.1391953150",
                     formData.investment,
                 );
-                url.searchParams.append(
-                    "entry.YOUR_ENTRY_ID",
-                    formData.additionalInfo,
-                );
+
+                // Optional additional info - only append if it has a value
+                if (formData.additionalInfo.trim()) {
+                    url.searchParams.append(
+                        "entry.2130249970",
+                        formData.additionalInfo,
+                    );
+                }
+
                 window.open(url.toString(), "_blank");
                 setIsSubmitting(false);
                 setIsSubmitted(true);
@@ -644,6 +722,15 @@ export function PrivateClientInquiryForm() {
                                     />
                                 </div>
                             </div>
+
+                            {/* Error Message */}
+                            {submitError && (
+                                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                                    <p className="text-red-400 text-sm font-medium">
+                                        {submitError}
+                                    </p>
+                                </div>
+                            )}
 
                             {/* Submit Button */}
                             <button

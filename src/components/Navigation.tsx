@@ -14,19 +14,23 @@ export function Navigation() {
     const navLinks = [
         {
             name: "The Method",
-            href: "#method",
+            href: "/#method",
         },
         {
             name: "The Journey",
-            href: "#journey",
+            href: "/#journey",
         },
         {
             name: "Transformations",
-            href: "#transformations",
+            href: "/#transformations",
+        },
+        {
+            name: "Corporate",
+            href: "/corporate",
         },
         {
             name: "Begin",
-            href: "#contact",
+            href: "/#contact",
         },
     ];
 
@@ -43,11 +47,15 @@ export function Navigation() {
                     duration: 0.8,
                     ease: "easeOut",
                 }}
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-[#1a1a4e]/95 backdrop-blur-sm py-4 shadow-lg" : "bg-transparent py-6"}`}
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+                    scrolled
+                        ? "bg-[#1a1a4e]/95 backdrop-blur-sm py-4 shadow-lg"
+                        : "bg-transparent py-6"
+                }`}
             >
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
                     <a
-                        href="#"
+                        href="/#"
                         className="relative z-50 block w-12 opacity-90 hover:opacity-100 transition-opacity"
                     >
                         <img

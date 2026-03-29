@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { CommunitySection } from "./components/CommunitySection";
 import { ContactSection } from "./components/ContactSection";
+import { CorporatePage } from "./components/CorporatePage";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { FaqSection } from "./components/FaqSection";
 import { HeroSection } from "./components/HeroSection";
@@ -98,6 +99,7 @@ export function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/corporate" element={<CorporatePage />} />
                 <Route
                     path="/vault-registration"
                     element={<VaultRegistrationForm />}

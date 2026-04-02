@@ -29,6 +29,18 @@ export function Navigation() {
             href: "/corporate",
         },
         {
+            name: "Course",
+            href: "/course",
+        },
+        {
+            name: "Retreat",
+            href: "/retreat",
+        },
+        {
+            name: "The Vault",
+            href: "/vault",
+        },
+        {
             name: "Begin",
             href: "/#contact",
         },

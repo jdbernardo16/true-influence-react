@@ -111,40 +111,43 @@ export function PrivateClientInquiryForm() {
 
         setIsSubmitting(true);
 
-        // Create hidden inputs for Google Form submission
-        const formDataObj = new FormData();
+        // Create URLSearchParams directly for consistent behavior across environments
+        const params = new URLSearchParams();
 
         // Required fields - always included
-        formDataObj.append("entry.1752943827", formData.fullName);
-        formDataObj.append("entry.1260464480", formData.email);
-        formDataObj.append("entry.1997012052", formData.phone);
+        params.append("entry.1752943827", formData.fullName);
+        params.append("entry.1260464480", formData.email);
+        params.append("entry.1997012052", formData.phone);
 
         // Optional fields - only append if they have values
         if (formData.website.trim()) {
-            formDataObj.append("entry.1965474626", formData.website);
+            params.append("entry.1965474626", formData.website);
         }
 
         // Story Block is now required (at least one checkbox must be selected)
         // Include sentinel field for checkboxes
-        formDataObj.append("entry.318364041_sentinel", "");
-        formDataObj.append("entry.318364041", formData.storyBlock.join(", "));
+        params.append("entry.318364041_sentinel", "");
+        // For Google Forms, each checkbox value must be appended separately
+        formData.storyBlock.forEach((value) => {
+            params.append("entry.318364041", value);
+        });
 
         // Include sentinel fields for radio buttons
-        formDataObj.append("entry.735352643_sentinel", "");
-        formDataObj.append("entry.735352643", formData.visionGoal);
+        params.append("entry.735352643_sentinel", "");
+        params.append("entry.735352643", formData.visionGoal);
 
-        formDataObj.append("entry.1836767856_sentinel", "");
-        formDataObj.append("entry.1836767856", formData.outcomeGoal);
+        params.append("entry.1836767856_sentinel", "");
+        params.append("entry.1836767856", formData.outcomeGoal);
 
-        formDataObj.append("entry.159948075_sentinel", "");
-        formDataObj.append("entry.159948075", formData.professionalPath);
+        params.append("entry.159948075_sentinel", "");
+        params.append("entry.159948075", formData.professionalPath);
 
-        formDataObj.append("entry.1391953150_sentinel", "");
-        formDataObj.append("entry.1391953150", formData.investment);
+        params.append("entry.1391953150_sentinel", "");
+        params.append("entry.1391953150", formData.investment);
 
         // Optional additional info - only append if it has a value
         if (formData.additionalInfo.trim()) {
-            formDataObj.append("entry.2130249970", formData.additionalInfo);
+            params.append("entry.2130249970", formData.additionalInfo);
         }
 
         // Submit to Google Forms using fetch
@@ -154,7 +157,7 @@ export function PrivateClientInquiryForm() {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: new URLSearchParams(formDataObj as any).toString(),
+            body: params.toString(),
         })
             .then(() => {
                 setIsSubmitting(false);
@@ -190,10 +193,10 @@ export function PrivateClientInquiryForm() {
                 // Story Block is now required (at least one checkbox must be selected)
                 // Include sentinel field for checkboxes
                 url.searchParams.append("entry.318364041_sentinel", "");
-                url.searchParams.append(
-                    "entry.318364041",
-                    formData.storyBlock.join(", "),
-                );
+                // For Google Forms, each checkbox value must be appended separately
+                formData.storyBlock.forEach((value) => {
+                    url.searchParams.append("entry.318364041", value);
+                });
 
                 // Include sentinel fields for radio buttons
                 url.searchParams.append("entry.735352643_sentinel", "");

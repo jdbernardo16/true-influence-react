@@ -1,7 +1,13 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { CommunitySection } from "./components/CommunitySection";
 import { ContactSection } from "./components/ContactSection";
 import { CorporatePage } from "./components/CorporatePage";
+import { CorporateSection } from "./components/CorporateSection";
+import { CoursePage } from "./components/CoursePage";
+import { CourseSection } from "./components/CourseSection";
+import { RetreatPage } from "./components/RetreatPage";
+import { RetreatSection } from "./components/RetreatSection";
+import { VaultPage } from "./components/VaultPage";
+import { VaultSection } from "./components/VaultSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { FaqSection } from "./components/FaqSection";
 import { HeroSection } from "./components/HeroSection";
@@ -76,6 +82,9 @@ function HomePage() {
                 <JourneySection />
                 <TestimonialsSection />
                 <TransformationsSection />
+                <CorporateSection />
+                <CourseSection />
+                <RetreatSection />
                 <PhotoGalleryCarousel
                     photos={galleryPhotos}
                     title="Moments of Impact"
@@ -86,7 +95,7 @@ function HomePage() {
                 <WhoSection />
                 <PhilosophySection />
                 <ExperienceSection />
-                <CommunitySection />
+                <VaultSection />
                 <FaqSection />
                 <ContactSection />
             </main>
@@ -99,6 +108,9 @@ export function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/course" element={<CoursePage />} />
+                <Route path="/retreat" element={<RetreatPage />} />
+                <Route path="/vault" element={<VaultPage />} />
                 <Route path="/corporate" element={<CorporatePage />} />
                 <Route
                     path="/vault-registration"

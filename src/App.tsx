@@ -3,6 +3,7 @@ import { ContactSection } from "./components/ContactSection";
 import { CorporatePage } from "./components/CorporatePage";
 import { CorporateSection } from "./components/CorporateSection";
 import { CoursePage } from "./components/CoursePage";
+import { CourseRetreatPage } from "./components/CourseRetreatPage";
 import { CourseSection } from "./components/CourseSection";
 import { RetreatPage } from "./components/RetreatPage";
 import { RetreatSection } from "./components/RetreatSection";
@@ -110,6 +111,7 @@ export function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/course" element={<CoursePage />} />
                 <Route path="/retreat" element={<RetreatPage />} />
+                <Route path="/course-retreat" element={<CourseRetreatPage />} />
                 <Route path="/vault" element={<VaultPage />} />
                 <Route path="/corporate" element={<CorporatePage />} />
                 <Route
